@@ -1,3 +1,17 @@
+= 1.6.1 =
+* Regression fix: Notice was emitted by PHP about invalid variable. This was cosmetic only, and had no impact on functionality.
+
+= 1.6.0 =
+* Fix bug of case sensitity in listings order
+* Better warning of deprecated functions when called by other plugins or themes
+
+= 1.5.3 =
+* Regression in 1.5.2 causing empty listing is fixed
+
+= 1.5.2 =
+* Regression fix for styling loading - seems the widget code was still causing issues
+* Add inline PHPdoc to all functions and custom filters
+
 = 1.5.1 =
 * Fix multiple post-types support for shortcode
 * Update documentation to explain how to show multiple post-types with the shortcode
