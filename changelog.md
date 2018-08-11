@@ -1,11 +1,16 @@
 ## Full Changelog
 
+### 1.9.2
+Bugfix:
+
+* Fix using multiple terms in the shortcode only displays results for the first term
+
 ### 1.9.1
 Add CSS classes to letters indicating presence of posts or not:
-  
+
 * `has-posts` allows styling of letters that have posts visible in the listing
 * `no-posts` allows styling of letters that do not have any posts visible in the listing
-  
+
 You can use these classes to hide letters that have no posts by including the following CSS rule:
 `.az-letters ul.az-links li.no-posts {
     display: none;
