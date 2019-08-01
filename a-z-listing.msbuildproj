@@ -4,8 +4,8 @@
     <OutputType>Library</OutputType>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Description>A-Z Listing plugin for WordPress (Peachpied.WordPress)</Description>
-    <AssemblyName>a-z-listing</AssemblyName>
-    <PackageId>a-z-listing</PackageId>
+    <AssemblyName>bowlhat.wp-a-z-listing</AssemblyName>
+    <PackageId>wp-a-z-listing</PackageId>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
