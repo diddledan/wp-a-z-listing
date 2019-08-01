@@ -23,23 +23,23 @@ local matrix = [
     },
     {
         wp: "5.0",
-        php: ["5.6", "7.0", "7.1", "7.2", "7.3", "latest", "nightly"],
+        php: ["5.6", "7.0", "7.1", "7.2", "7.3"],
     },
     {
         wp: "5.1",
-        php: ["5.6", "7.0", "7.1", "7.2", "7.3", "latest", "nightly"],
+        php: ["5.6", "7.0", "7.1", "7.2", "7.3"],
     },
     {
         wp: "5.2",
-        php: ["5.6", "7.0", "7.1", "7.2", "7.3", "latest", "nightly"],
+        php: ["5.6", "7.0", "7.1", "7.2", "7.3"],
     },
     {
         wp: "latest",
-        php: ["5.6", "7.0", "7.1", "7.2", "7.3", "latest", "nightly"],
+        php: ["5.6", "7.0", "7.1", "7.2", "7.3"],
     },
     {
         wp: "nightly",
-        php: ["5.6", "7.0", "7.1", "7.2", "7.3", "latest", "nightly"],
+        php: ["5.6", "7.0", "7.1", "7.2", "7.3"],
     },
 ];
 
@@ -91,7 +91,7 @@ local triggerSteps = [
         settings: {
             server: "https://drone.bowlhat.net/",
             token: {
-                fromSecret: "secret",
+                fromSecret: "drone-token",
             },
             fork: true,
             repositories: downstreamRepos,

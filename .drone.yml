@@ -476,62 +476,6 @@ services:
 
 ---
 kind: pipeline
-name: wordpress-5.0:php-latest
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: phpunit
-  image: bowlhat/gitlab-php-runner:latest
-  commands:
-  - apt-get clean
-  - apt-get -yqq update
-  - DEBIAN_FRONTEND=noninteractive apt-get -yqqf install zip unzip subversion mariadb-client libmariadb-dev --fix-missing
-  - docker-php-ext-enable mbstring mysqli pdo_mysql intl gd zip bz2
-  - bash bin/install-wp-tests.sh wordpress_tests root mysql mysql 5.0 true
-  - "curl -sSLo phpunit.phar https://phar.phpunit.de/phpunit-5.phar && chmod +x phpunit.phar"
-  - composer install
-  - ./phpunit
-
-services:
-- name: mysql
-  image: mysql:5.6
-  environment:
-    MYSQL_DATABASE: wordpress_tests
-    MYSQL_ROOT_PASSWORD: mysql
-
----
-kind: pipeline
-name: wordpress-5.0:php-nightly
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: phpunit
-  image: bowlhat/gitlab-php-runner:nightly
-  commands:
-  - apt-get clean
-  - apt-get -yqq update
-  - DEBIAN_FRONTEND=noninteractive apt-get -yqqf install zip unzip subversion mariadb-client libmariadb-dev --fix-missing
-  - docker-php-ext-enable mbstring mysqli pdo_mysql intl gd zip bz2
-  - bash bin/install-wp-tests.sh wordpress_tests root mysql mysql 5.0 true
-  - "curl -sSLo phpunit.phar https://phar.phpunit.de/phpunit-5.phar && chmod +x phpunit.phar"
-  - composer install
-  - ./phpunit
-
-services:
-- name: mysql
-  image: mysql:5.6
-  environment:
-    MYSQL_DATABASE: wordpress_tests
-    MYSQL_ROOT_PASSWORD: mysql
-
----
-kind: pipeline
 name: wordpress-5.1:php-5.6
 
 platform:
@@ -653,62 +597,6 @@ platform:
 steps:
 - name: phpunit
   image: bowlhat/gitlab-php-runner:7.3
-  commands:
-  - apt-get clean
-  - apt-get -yqq update
-  - DEBIAN_FRONTEND=noninteractive apt-get -yqqf install zip unzip subversion mariadb-client libmariadb-dev --fix-missing
-  - docker-php-ext-enable mbstring mysqli pdo_mysql intl gd zip bz2
-  - bash bin/install-wp-tests.sh wordpress_tests root mysql mysql 5.1 true
-  - "curl -sSLo phpunit.phar https://phar.phpunit.de/phpunit-5.phar && chmod +x phpunit.phar"
-  - composer install
-  - ./phpunit
-
-services:
-- name: mysql
-  image: mysql:5.6
-  environment:
-    MYSQL_DATABASE: wordpress_tests
-    MYSQL_ROOT_PASSWORD: mysql
-
----
-kind: pipeline
-name: wordpress-5.1:php-latest
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: phpunit
-  image: bowlhat/gitlab-php-runner:latest
-  commands:
-  - apt-get clean
-  - apt-get -yqq update
-  - DEBIAN_FRONTEND=noninteractive apt-get -yqqf install zip unzip subversion mariadb-client libmariadb-dev --fix-missing
-  - docker-php-ext-enable mbstring mysqli pdo_mysql intl gd zip bz2
-  - bash bin/install-wp-tests.sh wordpress_tests root mysql mysql 5.1 true
-  - "curl -sSLo phpunit.phar https://phar.phpunit.de/phpunit-5.phar && chmod +x phpunit.phar"
-  - composer install
-  - ./phpunit
-
-services:
-- name: mysql
-  image: mysql:5.6
-  environment:
-    MYSQL_DATABASE: wordpress_tests
-    MYSQL_ROOT_PASSWORD: mysql
-
----
-kind: pipeline
-name: wordpress-5.1:php-nightly
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: phpunit
-  image: bowlhat/gitlab-php-runner:nightly
   commands:
   - apt-get clean
   - apt-get -yqq update
@@ -868,62 +756,6 @@ services:
 
 ---
 kind: pipeline
-name: wordpress-5.2:php-latest
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: phpunit
-  image: bowlhat/gitlab-php-runner:latest
-  commands:
-  - apt-get clean
-  - apt-get -yqq update
-  - DEBIAN_FRONTEND=noninteractive apt-get -yqqf install zip unzip subversion mariadb-client libmariadb-dev --fix-missing
-  - docker-php-ext-enable mbstring mysqli pdo_mysql intl gd zip bz2
-  - bash bin/install-wp-tests.sh wordpress_tests root mysql mysql 5.2 true
-  - "curl -sSLo phpunit.phar https://phar.phpunit.de/phpunit-5.phar && chmod +x phpunit.phar"
-  - composer install
-  - ./phpunit
-
-services:
-- name: mysql
-  image: mysql:5.6
-  environment:
-    MYSQL_DATABASE: wordpress_tests
-    MYSQL_ROOT_PASSWORD: mysql
-
----
-kind: pipeline
-name: wordpress-5.2:php-nightly
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: phpunit
-  image: bowlhat/gitlab-php-runner:nightly
-  commands:
-  - apt-get clean
-  - apt-get -yqq update
-  - DEBIAN_FRONTEND=noninteractive apt-get -yqqf install zip unzip subversion mariadb-client libmariadb-dev --fix-missing
-  - docker-php-ext-enable mbstring mysqli pdo_mysql intl gd zip bz2
-  - bash bin/install-wp-tests.sh wordpress_tests root mysql mysql 5.2 true
-  - "curl -sSLo phpunit.phar https://phar.phpunit.de/phpunit-5.phar && chmod +x phpunit.phar"
-  - composer install
-  - ./phpunit
-
-services:
-- name: mysql
-  image: mysql:5.6
-  environment:
-    MYSQL_DATABASE: wordpress_tests
-    MYSQL_ROOT_PASSWORD: mysql
-
----
-kind: pipeline
 name: wordpress-latest:php-5.6
 
 platform:
@@ -1045,62 +877,6 @@ platform:
 steps:
 - name: phpunit
   image: bowlhat/gitlab-php-runner:7.3
-  commands:
-  - apt-get clean
-  - apt-get -yqq update
-  - DEBIAN_FRONTEND=noninteractive apt-get -yqqf install zip unzip subversion mariadb-client libmariadb-dev --fix-missing
-  - docker-php-ext-enable mbstring mysqli pdo_mysql intl gd zip bz2
-  - bash bin/install-wp-tests.sh wordpress_tests root mysql mysql latest true
-  - "curl -sSLo phpunit.phar https://phar.phpunit.de/phpunit-5.phar && chmod +x phpunit.phar"
-  - composer install
-  - ./phpunit
-
-services:
-- name: mysql
-  image: mysql:5.6
-  environment:
-    MYSQL_DATABASE: wordpress_tests
-    MYSQL_ROOT_PASSWORD: mysql
-
----
-kind: pipeline
-name: wordpress-latest:php-latest
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: phpunit
-  image: bowlhat/gitlab-php-runner:latest
-  commands:
-  - apt-get clean
-  - apt-get -yqq update
-  - DEBIAN_FRONTEND=noninteractive apt-get -yqqf install zip unzip subversion mariadb-client libmariadb-dev --fix-missing
-  - docker-php-ext-enable mbstring mysqli pdo_mysql intl gd zip bz2
-  - bash bin/install-wp-tests.sh wordpress_tests root mysql mysql latest true
-  - "curl -sSLo phpunit.phar https://phar.phpunit.de/phpunit-5.phar && chmod +x phpunit.phar"
-  - composer install
-  - ./phpunit
-
-services:
-- name: mysql
-  image: mysql:5.6
-  environment:
-    MYSQL_DATABASE: wordpress_tests
-    MYSQL_ROOT_PASSWORD: mysql
-
----
-kind: pipeline
-name: wordpress-latest:php-nightly
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: phpunit
-  image: bowlhat/gitlab-php-runner:nightly
   commands:
   - apt-get clean
   - apt-get -yqq update
@@ -1260,62 +1036,6 @@ services:
 
 ---
 kind: pipeline
-name: wordpress-nightly:php-latest
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: phpunit
-  image: bowlhat/gitlab-php-runner:latest
-  commands:
-  - apt-get clean
-  - apt-get -yqq update
-  - DEBIAN_FRONTEND=noninteractive apt-get -yqqf install zip unzip subversion mariadb-client libmariadb-dev --fix-missing
-  - docker-php-ext-enable mbstring mysqli pdo_mysql intl gd zip bz2
-  - bash bin/install-wp-tests.sh wordpress_tests root mysql mysql nightly true
-  - "curl -sSLo phpunit.phar https://phar.phpunit.de/phpunit-5.phar && chmod +x phpunit.phar"
-  - composer install
-  - ./phpunit
-
-services:
-- name: mysql
-  image: mysql:5.6
-  environment:
-    MYSQL_DATABASE: wordpress_tests
-    MYSQL_ROOT_PASSWORD: mysql
-
----
-kind: pipeline
-name: wordpress-nightly:php-nightly
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: phpunit
-  image: bowlhat/gitlab-php-runner:nightly
-  commands:
-  - apt-get clean
-  - apt-get -yqq update
-  - DEBIAN_FRONTEND=noninteractive apt-get -yqqf install zip unzip subversion mariadb-client libmariadb-dev --fix-missing
-  - docker-php-ext-enable mbstring mysqli pdo_mysql intl gd zip bz2
-  - bash bin/install-wp-tests.sh wordpress_tests root mysql mysql nightly true
-  - "curl -sSLo phpunit.phar https://phar.phpunit.de/phpunit-5.phar && chmod +x phpunit.phar"
-  - composer install
-  - ./phpunit
-
-services:
-- name: mysql
-  image: mysql:5.6
-  environment:
-    MYSQL_DATABASE: wordpress_tests
-    MYSQL_ROOT_PASSWORD: mysql
-
----
-kind: pipeline
 name: trigger
 
 platform:
@@ -1332,7 +1052,7 @@ steps:
     - a-z-listing/search-replace
     server: https://drone.bowlhat.net/
     token:
-      fromSecret: secret
+      fromSecret: drone-token
 
 trigger:
   status:
@@ -1356,35 +1076,25 @@ depends_on:
 - wordpress-5.0:php-7.1
 - wordpress-5.0:php-7.2
 - wordpress-5.0:php-7.3
-- wordpress-5.0:php-latest
-- wordpress-5.0:php-nightly
 - wordpress-5.1:php-5.6
 - wordpress-5.1:php-7.0
 - wordpress-5.1:php-7.1
 - wordpress-5.1:php-7.2
 - wordpress-5.1:php-7.3
-- wordpress-5.1:php-latest
-- wordpress-5.1:php-nightly
 - wordpress-5.2:php-5.6
 - wordpress-5.2:php-7.0
 - wordpress-5.2:php-7.1
 - wordpress-5.2:php-7.2
 - wordpress-5.2:php-7.3
-- wordpress-5.2:php-latest
-- wordpress-5.2:php-nightly
 - wordpress-latest:php-5.6
 - wordpress-latest:php-7.0
 - wordpress-latest:php-7.1
 - wordpress-latest:php-7.2
 - wordpress-latest:php-7.3
-- wordpress-latest:php-latest
-- wordpress-latest:php-nightly
 - wordpress-nightly:php-5.6
 - wordpress-nightly:php-7.0
 - wordpress-nightly:php-7.1
 - wordpress-nightly:php-7.2
 - wordpress-nightly:php-7.3
-- wordpress-nightly:php-latest
-- wordpress-nightly:php-nightly
 
 ...
