@@ -1,13 +1,47 @@
+local downstreamRepos = [
+    "a-z-listing/proper-nouns",
+    "a-z-listing/search-replace",
+];
+
 local mysqlver = "5.6";
-
-local php5 = ["5.6"];
-local php70 = ["7.0", "7.1"];
-local php72 = ["7.2", "7.3"];
-local phplatest = ["latest","nightly"];
-
-local wp46 = ["4.6","4.7","4.8","4.9"];
-local wp50 = ["5.0","5.1","5.2"];
-local wplatest = ["latest","nightly"];
+local matrix = [
+    {
+        wp: "4.6",
+        php: ["5.6", "7.0", "7.1"],
+    },
+    {
+        wp: "4.7",
+        php: ["5.6", "7.0", "7.1"],
+    },
+    {
+        wp: "4.8",
+        php: ["5.6", "7.0", "7.1"],
+    },
+    {
+        wp: "4.9",
+        php: ["5.6", "7.0", "7.1"],
+    },
+    {
+        wp: "5.0",
+        php: ["5.6", "7.0", "7.1", "7.2", "7.3", "latest", "nightly"],
+    },
+    {
+        wp: "5.1",
+        php: ["5.6", "7.0", "7.1", "7.2", "7.3", "latest", "nightly"],
+    },
+    {
+        wp: "5.2",
+        php: ["5.6", "7.0", "7.1", "7.2", "7.3", "latest", "nightly"],
+    },
+    {
+        wp: "latest",
+        php: ["5.6", "7.0", "7.1", "7.2", "7.3", "latest", "nightly"],
+    },
+    {
+        wp: "nightly",
+        php: ["5.6", "7.0", "7.1", "7.2", "7.3", "latest", "nightly"],
+    },
+];
 
 local services = [
 	{
@@ -20,20 +54,27 @@ local services = [
 	},
 ];
 
-local Pipeline(phpver, wpver) = {
+local TestStageTitle(php, wp) = "wordpress-" + wp + ":php-" + php;
+local MatrixIterator(fn) = [
+    fn(php, entry.wp)
+    for entry in matrix
+    for php in entry.php
+];
+
+local Pipeline(php, wp) = {
 	kind: "pipeline",
-	name: "wordpress-" + wpver + ":php-" + phpver,
+	name: TestStageTitle(php, wp),
 
 	steps: [
 		{
 			name: "phpunit",
-			image: "bowlhat/gitlab-php-runner:" + phpver,
+			image: "bowlhat/gitlab-php-runner:" + php,
 			commands: [
 				"apt-get clean",
 				"apt-get -yqq update",
 				"DEBIAN_FRONTEND=noninteractive apt-get -yqqf install zip unzip subversion mariadb-client libmariadb-dev --fix-missing",
 				"docker-php-ext-enable mbstring mysqli pdo_mysql intl gd zip bz2",
-				"bash bin/install-wp-tests.sh wordpress_tests root mysql mysql " + wpver + " true",
+				"bash bin/install-wp-tests.sh wordpress_tests root mysql mysql " + wp + " true",
 				"curl -sSLo phpunit.phar https://phar.phpunit.de/phpunit-5.phar && chmod +x phpunit.phar",
 				"composer install",
 				"./phpunit",
@@ -43,14 +84,28 @@ local Pipeline(phpver, wpver) = {
 	services: services,
 };
 
-[
-	// wp4.* supports up to php-7.1
-	Pipeline(phpver, wpver)
-	for wpver in wp46 + wp50 + wplatest
-	for phpver in php5 + php70
-]+[
-	// wp5+ supports all php versions
-	Pipeline(phpver, wpver)
-	for wpver in wp50 + wplatest
-	for phpver in php5 + php70 + php72 + phplatest
-]
+local triggerSteps = [
+    {
+        name: "trigger",
+        image: "plugins/downstream",
+        settings: {
+            server: "https://drone.bowlhat.net/",
+            token: {
+                fromSecret: "secret",
+            },
+            fork: true,
+            repositories: downstreamRepos,
+        },
+    },
+];
+
+MatrixIterator(Pipeline)+[{
+    kind: "pipeline",
+    name: "trigger",
+
+    steps: triggerSteps,
+    trigger: {
+        status: ["success"],
+    },
+    depends_on: MatrixIterator(TestStageTitle)
+}]
